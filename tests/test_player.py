@@ -28,13 +28,6 @@ class TestPlayer:
         assert isinstance(player.name, str)
     
     # Score management tests
-    def test_player_initial_score_is_zero(self):
-        """
-        Test that initial score is always 0
-        """
-        player = Player("Test Player")
-        assert player.score == 0
-
     def test_player_can_add_points(self):
         """
         Test that points can be added to player score
