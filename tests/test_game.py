@@ -1,12 +1,11 @@
-"""
-Import class here
-"""
+from game import Game
+
 class TestGame:
     def test_rolling_one(self): 
         """
         Test when 1 is rolled the turn ends and give 0 points
         """
-        game = Game("Player1", "player2")
+        game = Game("Player1", "Player2")
         initial_score = game.human_player.score
         game.roll_dice() # assumption of this returning 1
         assert game.current_turn_points == 0
@@ -27,6 +26,6 @@ class TestGame:
         """
         Test both players start with 0 score
         """
-        game = Game("Player1", "Player2")
-        assert game.player1.score == 0
-        assert game.player1.score == 0
+        game = Game("human player", "computer player")
+        assert game.human_player.score == 0
+        assert game.computer_player.score == 0
