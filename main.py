@@ -5,7 +5,15 @@
 Main class to call on shell and create loop.
 """
 
+instructions = "Let's play a game.\n" \
+"Two-Dice Pigs involves collecting as many points as possible.\n" \
+"You roll 2 dice, if niether show ⚀, add those points to your score and roll again!\n" \
+"If a single ⚀ is rolled, you score nothing and your turn ends.\n" \
+"If 2 ⚀ are rolled, your score resets and your turn ends.\n" \
+"You have 10 turns to score as many points as possible.\n"
+
 def main():
+    print(instructions)
     print('Bing Chilling')
 
 if __name__ == "__main__":

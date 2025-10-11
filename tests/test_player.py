@@ -84,3 +84,10 @@ class TestPlayer:
             assert False, "Expected exception for negative points"
         except ValueError:
             assert True
+    
+    def test_default_player_score(self):
+        """
+        Tests that default player score is 0
+        """
+        player = Player("mamahuevo")
+        assert player.score == 0
