@@ -1,3 +1,7 @@
+"""
+Game class testing
+"""
+
 from game import Game
 
 class TestGame:
