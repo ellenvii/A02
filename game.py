@@ -1,24 +1,24 @@
-from dice import Die
 from player import Player
+from dice import Die
 
 class Game:
-
     win_score = 100
 
-    def __init__(self, human_name, computer_name ):
-
+    def __init__(self, human_name: str, computer_name: str):
         self.winner = None
         self.loser = None
 
         self.human_player = Player(human_name)
         self.computer_player = Player(computer_name)
         self.game_over = False
-    
+
     def roll_dice(self):
         pass
 
     def start(self):
-        pass
+        print('Game has started!')
+        print(self.human_player.name)
+        print(self.computer_player.name)
 
     def cheat(self):
         pass

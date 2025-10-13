@@ -14,3 +14,9 @@ class TestDie:
             x = d.roll()
             assert 1 <= x <= 6
     
+
+    # def test_init(self):
+    #     for i in range(10):
+    #         d = Die(sides=i)
+    #         assert d.sides == i
+
