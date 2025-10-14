@@ -1,3 +1,7 @@
+"""
+Player class testing
+"""
+
 from player import Player
 
 class TestPlayer:
