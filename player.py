@@ -22,4 +22,6 @@ class Player:
     def reset_score(self):
         self.score = 0
     
-
+    def hold(self, points):
+        self.score += points
+    
