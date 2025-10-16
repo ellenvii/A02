@@ -2,13 +2,15 @@ from dice import Die
 
 class DiceHand:
 
-    def __init__(self, num_of_dice):       
+    def __init__(self, num_of_dice):    
+        """Constructor"""   
         
         self.die1 = Die()
         self.die2 = Die()
         self.current_value = (0, 0)
 
     def roll(self):
+        """Rolls dice"""
         r1 = self.die1.roll()
         r2 = self.die2.roll()
         self.current_value = (r1, r2)

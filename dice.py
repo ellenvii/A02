@@ -7,6 +7,7 @@ class Die:
 
     #shall always have 6 sides
     def __init__(self, sides: int = 6):
+
         self.sides = sides 
         self.last_roll = 0
 
