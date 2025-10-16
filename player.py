@@ -23,5 +23,5 @@ class Player:
         self.score = 0
     
     def hold(self, points):
-        self.score += points
+        self.add_points(points)
     

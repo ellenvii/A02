@@ -14,7 +14,7 @@ class TestDie:
             x = d.roll()
             assert 1 <= x <= 6
     
-    def test_resturns_integer(self):
+    def test_returns_integer(self):
         """
         
         """
@@ -39,7 +39,7 @@ class TestDie:
             results.add(dice.roll())
         assert len(results) > 1
 
-    def test_las_roll_is_remembered(self):
+    def test_last_roll_is_remembered(self):
         """
         
         """
