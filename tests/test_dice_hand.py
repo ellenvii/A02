@@ -17,7 +17,7 @@ class TestDiceHand:
         """
         Tests that the reset clears the accumulates turn points
         """
-        dice_hand = DiceHand()
+        dice_hand = DiceHand(2)
         dice_hand.turn_points = 15
         dice_hand.reset()
         assert dice_hand.turn_points == 0
