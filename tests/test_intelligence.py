@@ -7,7 +7,7 @@ class Intelligence:
         """
         test that decite method returns either 'roll' or 'hold'
         """
-        computer = Intelligence         # wasn't sure if call it computer or ai
+        computer = Intelligence         
         decision = computer.decide(current_turn_points=10, total_score=30, opp_score=25)        # oop = opponent
         assert decision in ["roll", "hold"]
 

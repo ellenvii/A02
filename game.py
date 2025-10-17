@@ -76,7 +76,7 @@ class Game:
                 r1, r2, total = self.roll_dice()
                 if not self.handle_roll(r1,r2, total):
                      return
-                hold_or_roll = input("Do you wish to hold ro roll again? ")
+                hold_or_roll = input("Do you wish to hold or roll again? ")
                 if hold_or_roll == "h":
                     self.hold_and_check_win()
                     if not self.game_over:
