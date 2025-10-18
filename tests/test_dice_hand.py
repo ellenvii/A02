@@ -28,14 +28,14 @@ class TestDiceHand:
         assert isinstance(dice_hand.die2, Die)
         assert dice_hand.current_value == (0,0)
 
-    def test_two_values_and_total_returned():
+    def test_two_values_and_total_returned(self):
         dice_hand = DiceHand()
         r1, r2, total = dice_hand.roll()
         assert 1<= r1 <= 6
         assert 1<= r2 <= 6
         assert total == r1 + r2
 
-    def test_no_negative_values():
+    def test_no_negative_values(self):
         dice_hand = DiceHand()
         for _ in range(100):
             r1, r2, total = dice_hand.roll()
@@ -43,31 +43,31 @@ class TestDiceHand:
             assert r2 > 0
             assert total > 0
 
-    def test_integers_returned():
+    def test_integers_returned(self):
         dice_hand = DiceHand()
         r1, r2, total = dice_hand.roll()
         assert isinstance(r1, int)
         assert isinstance(r2, int)
         assert isinstance(total, int)
 
-    def test_highest_number_possible_to_roll():
+    def test_highest_number_possible_to_roll(self):
         dice_hand = DiceHand()
         for _ in range(100):
             _, _, total = dice_hand.roll()
             assert total <= 12
 
-    def test_lowest_number_possible_to_roll():
+    def test_lowest_number_possible_to_roll(self):
         dice_hand = DiceHand()
         for _ in range(100):
             _, _, total = dice_hand.roll()
             assert total >= 2
 
-    def test_current_value_updates_correctly():
+    def test_current_value_updates_correctly(self):
        dice_hand = DiceHand()
        r1, r2, _ = dice_hand.roll()
        assert dice_hand.current_value == (r1, r2)
 
-    def test_values_has_corresponding_graphic():
+    def test_values_has_corresponding_graphic(self):
         dice_hand = DiceHand()
         for val in range(1, 7):
             g1 = dice_hand.die1.get_dice_graphics(val)

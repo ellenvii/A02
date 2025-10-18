@@ -47,11 +47,11 @@ class TestDie:
         rolled_value = dice.roll()
         assert dice.last_roll == rolled_value
     
-    def test_graphics_returned_correct():
+    def test_graphics_returned_correct(self):
         dice = Die(2)
         assert dice.get_dice_graphics(1) == '⚀'
 
-    def test_many_rolls_in_range():
+    def test_many_rolls_in_range(self):
         dice = Die()
         for _ in range(5):
             value = dice.roll()

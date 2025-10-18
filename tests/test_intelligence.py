@@ -42,25 +42,25 @@ class Intelligence:
         decision = computer.decide(current_turn_points=15, total_score=30, opponent_score=30)
         assert decision == "roll"           # hard computer should know the score is low enough to be able to roll
 
-    def test_computer_is_holding_when_ahead():
+    def test_computer_is_holding_when_ahead(self):
         """
         
         """
-        computer = Intelligence()
+        computer = Intelligence(self)
         decision = computer.decide(current_turn_point=10, total_score=90, opponent_score=50)
         assert decision == "hold"
         
-    def test_roll_when_opponent_close_win():
+    def test_roll_when_opponent_close_win(self):
         computer = Intelligence()
         decision = computer.decide(current_turn_point=4, total_score=56, opponent_score=99)
         assert decision == "roll"
 
-    def test_computer_being_cautios_by_holding():
+    def test_computer_being_cautios_by_holding(self):
         computer = Intelligence(difficulty="hard")
         decision = computer.decide(current_turn_point=11, total_score=84, opponent_score=47)
         assert decision == "hold"
 
-    def test_when_safe_computer_rolls():
+    def test_when_safe_computer_rolls(self):
         computer = Intelligence()
         decision = computer.decide(current_turn_point=7, total_score=34, opponent_score=68)
         assert decision == "roll"

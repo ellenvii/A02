@@ -73,7 +73,7 @@ class TestGame:
         assert game.current_player == game.computer_player      # next player turn
         assert game.other_player.score == 0                     # previous player (human) resets to 0
 
-    def test_turn_total():
+    def test_turn_total(self):
         """
         Testing total of turns are accumulated 
         """
@@ -82,7 +82,7 @@ class TestGame:
         game.handle_roll(4, 5, 9)
         assert game.turn_total == 15
 
-    def test_hold_not_ending_game():
+    def test_hold_not_ending_game(self):
         """
         
         """
@@ -91,7 +91,7 @@ class TestGame:
         game.hold_and_check_win()
         assert game.game_over is False
 
-    def test_hold_right_before_winning():
+    def test_hold_right_before_winning(self):
         """
         
         """
