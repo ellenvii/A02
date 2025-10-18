@@ -7,7 +7,7 @@ class Intelligence:
         """
         test that decite method returns either 'roll' or 'hold'
         """
-        computer = Intelligence         
+        computer = Intelligence()         
         decision = computer.decide(current_turn_points=10, total_score=30, opp_score=25)        # oop = opponent
         assert decision in ["roll", "hold"]
 
@@ -27,7 +27,7 @@ class Intelligence:
         """
         Test that computer holds when is close to winning
         """
-        computer = Intelligence(difficulty="medium")
+        computer = Intelligence()
         decision = computer.decide(current_turn_point=5, total_score=98, opponent_score=50)
         assert decision == "hold"
 
@@ -35,13 +35,44 @@ class Intelligence:
         """
         Test that it can be possible to change the difficulty of the computer intelligence during the game
         """
-        computer = Intelligence(difficulty="easy")
+        computer = Intelligence()
         computer.set_dificulty("hard")
         assert computer.difficulty == "hard"
 
         decision = computer.decide(current_turn_points=15, total_score=30, opponent_score=30)
         assert decision == "roll"           # hard computer should know the score is low enough to be able to roll
 
+    def test_computer_is_holding_when_ahead():
+        """
+        
+        """
+        computer = Intelligence()
+        decision = computer.decide(current_turn_point=10, total_score=90, opponent_score=50)
+        assert decision == "hold"
+        
+    def test_roll_when_opponent_close_win():
+        computer = Intelligence()
+        decision = computer.decide(current_turn_point=4, total_score=56, opponent_score=99)
+        assert decision == "roll"
 
+    def test_computer_being_cautios_by_holding():
+        computer = Intelligence(difficulty="hard")
+        decision = computer.decide(current_turn_point=11, total_score=84, opponent_score=47)
+        assert decision == "hold"
+
+    def test_when_safe_computer_rolls():
+        computer = Intelligence()
+        decision = computer.decide(current_turn_point=7, total_score=34, opponent_score=68)
+        assert decision == "roll"
+
+
+    # Dont know what more to test...
+
+    # def test():
+    #     pass
+
+    # def test():
+    #     pass 
+    
 
 
