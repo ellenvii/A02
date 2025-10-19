@@ -67,7 +67,7 @@ class TestGame:
         
         """
         game = Game("Human player", "Computer player")
-        game.current_player.score(43)
+        game.current_player.score == 43
         result = game.handle_roll(1, 1, 2)
         assert result is False
         assert game.current_player == game.computer_player      # next player turn
