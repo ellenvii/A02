@@ -2,9 +2,9 @@
 Sustainable Methods Project
 
 
-## Instructions for Pytest:
+# Instructions for Pytest:
 
-# Installation of Pytest
+## Installation of Pytest
 
 First make sure you have installed pytest through the terminal:
 
@@ -12,7 +12,7 @@ First make sure you have installed pytest through the terminal:
 pip install pytest
 ```
 
-# Running all tests
+## Running all tests
 
 To be able to run all tests you only need to write "pytest" on the terminal
 
@@ -20,7 +20,7 @@ To be able to run all tests you only need to write "pytest" on the terminal
 pytest
 ```
 
-# Running specific files
+## Running specific files
 
 If you are only interested on one file you can use the following, in this example we are going to use test_game.py
 
@@ -28,7 +28,7 @@ If you are only interested on one file you can use the following, in this exampl
 pytest tests/test_game.py
 ```
 
-# Example of the output
+## Example of the output
 
 ```bash
 ===================================== short test summary info =====================================
