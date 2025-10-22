@@ -37,3 +37,21 @@ FAILED tests/test_game.py::TestGame::test_win_score_equal_100 - AttributeError: 
 FAILED tests/test_game.py::TestGame::test_end_game_finishes_turns - assert 44 == 0
 =================================== 3 failed, 7 passed in 0.06s ===================================
 ```
+
+# Instructions for Pyreverse:
+
+## Generating a UML Diagram
+
+First install pyreverse (included in pylint) in your venv.
+
+```bash
+pip install pylint
+```
+
+Then, run pyreverse. svg can be replaced with png. 
+
+```bash
+pyreverse -o svg -p A02 -A -S -f ALL \ 
+  dice.py dice_hand.py game.py highscore.py histogram.py intelligence.py main.py player.py shell.py
+```
+
