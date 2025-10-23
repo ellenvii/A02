@@ -46,6 +46,20 @@ class TestDie:
         dice = Die()
         rolled_value = dice.roll()
         assert dice.last_roll == rolled_value
+    
+    def test_graphics_returned_correct(self):
+        dice = Die(2)
+        assert dice.get_dice_graphics(1) == '⚀'
+
+    def test_many_rolls_in_range(self):
+        dice = Die()
+        for _ in range(5):
+            value = dice.roll()
+            assert 1 <= value <= 6
+
+    def test_lenght_for_graphics():
+        dice = Die()
+        assert len(dice.dice_graphics) == 6
 
     # Some error handling tests
     def test_invalid_sides_are_rejected(self):
@@ -67,6 +81,3 @@ class TestDie:
             assert False, "Raising error for negative sides"
         except ValueError:
             assert True
-
-
-    
