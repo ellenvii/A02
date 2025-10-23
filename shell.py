@@ -4,6 +4,7 @@ Using cmd module to create an interface for the main program.
 
 import game
 import cmd
+from histogram import Histogram
 
 
 class Shell(cmd.Cmd):
@@ -32,3 +33,8 @@ class Shell(cmd.Cmd):
 
     def do_roll(self, arg):
         self.game.roll_dice()
+    
+    def do_showhist(self, arg):
+        """Display histograms for both players."""
+        self.game.human_histogram.show()
+        self.game.computer_histogram.show()
