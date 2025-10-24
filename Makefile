@@ -6,6 +6,9 @@ PYTHON ?= python3
 # Print colored messages
 MESSAGE = printf "\033[32;01m---> $(1)\033[0m\n"
 
+# All top-level python modules (exclude tests)
+MODULES := $(filter-out test_%.py,$(wildcard *.py))
+
 # Default rule
 all: codestyle test doc
 
@@ -81,7 +84,7 @@ test: lint pytest
 # Documentation
 pdoc:
 	@$(call MESSAGE,$@)
-	pdoc --force --html --output-dir doc/pdoc .
+	$(PYTHON) -m pdoc -o doc/pdoc $(MODULES)
 
 pyreverse:
 	@$(call MESSAGE,$@)
