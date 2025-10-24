@@ -80,20 +80,50 @@ FAILED tests/test_game.py::TestGame::test_end_game_finishes_turns - assert 44 ==
 ```
 
 # Generate UML
+Generated UML will be found in doc/pyreverse after running:
 
 ```bash
 make pyreverse
 ```
 
 # Generate PyDocs
+Generated PyDocs will be found in doc/pdoc after running:
 
 ```bash
 make pydoc
 ```
 
 # Checking Coverage and Generating Report
+Coverage reports willbe displayed once running:
 
 ```bash
 make coverage
 ```
 
+# Pylint 
+To run pylint: 
+
+```bash
+make pylint
+```
+
+# Flake8
+To run flake8:
+
+```bash
+make flake8
+```
+
+# Codestyle black
+To make codestyle black:
+
+```bash
+make black
+```
+
+# Radon
+To run radon-cc/mi/hal/raw (replace cc with different key): 
+
+```bash
+make radon-cc
+```
