@@ -7,7 +7,7 @@ from histogram import Histogram
 class TestHistogram:
     def test_initialization_with_zeros(self):
         """
-        
+        testing it initializes with zeros hehehe
         """
         histogram = Histogram()
         for value in range(1,7):
@@ -15,7 +15,7 @@ class TestHistogram:
         
     def test_correct_range_when_initialize(self):
         """
-        
+        testing there is a correct range when it initialize
         """
         histogram = Histogram()
         assert histogram.min_value == 1
@@ -23,7 +23,7 @@ class TestHistogram:
 
     def test_ability_to_add_single_roll(self):
         """
-        
+        testing to add a single roll
         """
         histogram = Histogram()
         histogram.add_roll(3)
@@ -31,7 +31,7 @@ class TestHistogram:
 
     def test_reset_working(self):
         """
-        
+        testing if the reset method works properly
         """
         histogram = Histogram()
         histogram.add_roll(1)
@@ -43,12 +43,18 @@ class TestHistogram:
             assert histogram.get_count(value) == 0
 
     def test_adding_same_roll_multiple_times(self):
+        """
+        tests adding the same exact roll for many times
+        """
         histogram = Histogram()
         for _ in range(5):
             histogram.add_roll(4)
             assert histogram.get_count(4) == 5
 
     def test_can_add_more_rolls_after_reset(self):
+        """
+        testing thaa it it capable to add more rolls after it is reseted
+        """
         histogram = Histogram()
         histogram.add_roll(5)
         histogram.reset()
@@ -57,10 +63,16 @@ class TestHistogram:
         assert histogram.total_rolls == 1
 
     def test_empty_equals_zero(self):
+        """
+        testign when empty
+        """
         histogram = Histogram()
         assert histogram.total_rolls == 0
 
     def test_not_valid_roll_dont_change_anything(self):
+        """
+        teting that invalid rolls doesnt change anything
+        """
         histogram = Histogram()
         histogram.add_roll(1) # nit valid total, there are 2 dices on each hand
         histogram.add_roll(13) #not valid either
@@ -70,6 +82,9 @@ class TestHistogram:
 
 
     def test_adding_different_totals(self):
+        """
+        tests adding multiple totals
+        """
         histogram = Histogram()
         rolls = [2, 5, 7, 12, 5]
         for r in rolls:
@@ -79,10 +94,3 @@ class TestHistogram:
         assert histogram.get_count(7) == 1
         assert histogram.get_count(12) == 1
         assert histogram.total_rolls == 5
-
-    # out of ideas to test more for now...
-    # def test():
-    #     pass
-
-    # def test():
-    #     pass

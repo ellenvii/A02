@@ -44,35 +44,33 @@ class Intelligence:
 
     def test_computer_is_holding_when_ahead(self):
         """
-        
+        testing that computer holds when its ahead
         """
         computer = Intelligence(self)
         decision = computer.decide(current_turn_point=10, total_score=90, opponent_score=50)
         assert decision == "hold"
         
     def test_roll_when_opponent_close_win(self):
+        """
+        tests rolling when the opponen is closer to winning the game
+        """
         computer = Intelligence()
         decision = computer.decide(current_turn_point=4, total_score=56, opponent_score=99)
         assert decision == "roll"
 
     def test_computer_being_cautios_by_holding(self):
+        """
+        tests computer is cautios and smart by holding 
+        """
         computer = Intelligence(difficulty="hard")
         decision = computer.decide(current_turn_point=11, total_score=84, opponent_score=47)
         assert decision == "hold"
 
     def test_when_safe_computer_rolls(self):
+        """
+        testing if the computer hold when it seems safe to do so
+        """
         computer = Intelligence()
         decision = computer.decide(current_turn_point=7, total_score=34, opponent_score=68)
         assert decision == "roll"
-
-
-    # Dont know what more to test...
-
-    # def test():
-    #     pass
-
-    # def test():
-    #     pass 
-    
-
 

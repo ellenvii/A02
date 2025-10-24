@@ -36,7 +36,7 @@ class TestGame:
 
     def test_turn_swaps(self):
         """
-        
+        Testing that each turn theres a swap
         """
         game = Game("Human player", "Computer player")
         game.swap_turn()
@@ -45,7 +45,7 @@ class TestGame:
 
     def test_dice_roll_returning_tuple(self):
         """
-        
+        tests that dice retunrs tuple heheh
         """
         game = Game("Human player", "Computer player")
         result = game.roll_dice()
@@ -54,7 +54,7 @@ class TestGame:
 
     def test_end_game_finishes_turns(self):
         """
-        
+        Tests that ending a game fineshes a turn
         """
         game = Game("Human player", "Computer player")
         game.game_over = True
@@ -64,7 +64,7 @@ class TestGame:
 
     def test_rolling_snake_eyes(self):
         """
-        
+        Tests the scenario of rolling a snake eyes
         """
         game = Game("Human player", "Computer player")
         game.current_player.score == 43
@@ -84,7 +84,7 @@ class TestGame:
 
     def test_hold_not_ending_game(self):
         """
-        
+        tests holding doesnt end the game
         """
         game = Game("Human player", "Computer player")
         game.turn_total = 17
@@ -93,7 +93,7 @@ class TestGame:
 
     def test_hold_right_before_winning(self):
         """
-        
+        testing hold before winning
         """
         game = Game("Human player", "Computer player")
         game.current_player.add_points(96)
