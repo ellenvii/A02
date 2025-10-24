@@ -10,6 +10,10 @@ class Game:
     """Game class"""
     win_score = 100
 
+    # widths for prettier alignment
+    _NAME_W = 16
+    _NUM_W = 4
+
     def __init__(
         self,
         human_name: str,
@@ -34,7 +38,7 @@ class Game:
         self.human_round = 0
         self.computer_round = 0
 
-        #reuse histograms if provided
+        # reuse histograms if provided
         if human_histogram is None:
             self.human_histogram = Histogram(self.human_player)
         else:
@@ -64,7 +68,7 @@ class Game:
         """Swap to the other player and reset the turn total."""
         self.turn_total = 0
         self.turn_index = (self.turn_index + 1) % len(self.players)
-        print(f"\n-- It is now {self.current_player.name}'s turn --")
+        print(f"\n➡️  It is now {self.current_player.name}'s turn")
 
     def _record_round_end(self) -> None:
         """Record the end of the active player's round in their histogram."""
@@ -84,20 +88,18 @@ class Game:
     def hold_and_check_win(self) -> None:
         """Bank the turn total for the current player and check for a win."""
         self.current_player.hold(self.turn_total)
+        # 💰 bank line with neat columns
         print(
-            f"{self.current_player.name} banks {self.turn_total}. "
-            f"Total = {self.current_player.score}"
+            f"💰 {self.current_player.name:<{self._NAME_W}} "
+            f"+{self.turn_total:>{self._NUM_W}}  |  "
+            f"Total = {self.current_player.score:>{self._NUM_W}}"
         )
 
         self._record_round_end()
         self.turn_total = 0
 
         if self.current_player.score >= self.win_score:
-            print(
-                f"\n{self.current_player.name} wins with "
-                f"{self.current_player.score} points!"
-            )
-            # Only add to highscore if it must be done for tests
+            print(f"\n🏆 {self.current_player.name} wins with {self.current_player.score} points!")
             if self.highscore is not None:
                 self.highscore.add_score(
                     self.current_player.name, self.current_player.score
@@ -106,14 +108,19 @@ class Game:
 
     def start(self) -> None:
         """Run the main game loop (interactive)."""
-        print("Game has started!")
-        print(f"Player 1: {self.human_player.name}")
-        print(f"Player 2: {self.computer_player.name}")
-        print(f"\n-- {self.current_player.name} starts --")
+        # simple header
+        print("╔" + "═" * 46 + "╗")
+        print(f"║ 🎲 Two-Dice Pigs".ljust(46)+"║")
+        print("╚" + "═" * 46 + "╝")
+        print(f"👤 Player 1: {self.human_player.name}")
+        print(f"🤖 Player 2: {self.computer_player.name}")
+        print(f"\n➡️  {self.current_player.name} starts\n")
 
-        cheat_choice = input('Do you feel like cheating? (y/n) '.lower().strip())
+        cheat_choice = input("🧪 Cheat for faster testing? (y) ").lower().strip()
         if cheat_choice == "y":
             self.cheat()
+        else:
+            print("Playing fair is also cool i guess. ")
 
         while not self.game_over:
             if self.current_player is self.human_player:
@@ -135,8 +142,8 @@ class Game:
 
             if should_hold:
                 print(
-                    f"{self.computer_player.name} decides to hold with "
-                    f"{self.turn_total}."
+                    f"🤖 {self.computer_player.name:<{self._NAME_W}} "
+                    f"holds with {self.turn_total:>{self._NUM_W}}"
                 )
                 self.hold_and_check_win()
                 if not self.game_over:
@@ -149,7 +156,7 @@ class Game:
             r1, r2, total = self.roll_dice()
             if not self.handle_roll(r1, r2, total):
                 return
-            user_choice = input("Do you wish to hold or roll again? ")
+            user_choice = input("\n📝 Hold (h) or roll (enter)? ")
             if user_choice == "h":
                 self.hold_and_check_win()
                 if not self.game_over:
@@ -164,7 +171,7 @@ class Game:
             True if the player may continue the turn, False if turn ends.
         """
         if r1 == 1 and r2 == 1:
-            print("Snake eyes! Your total score resets and your turn ends.")
+            print("🐍 Snake eyes! Your total score resets and your turn ends.")
             self.current_player.reset_score()
             self.turn_total = 0
             self._record_round_end()
@@ -172,7 +179,7 @@ class Game:
             return False
 
         if r1 == 1 or r2 == 1:
-            print("Rolled a 1 — no points this turn.")
+            print("⚠️  Rolled a 1 — no points this turn.")
             self.turn_total = 0
             self._record_round_end()
             self.swap_turn()
@@ -180,10 +187,14 @@ class Game:
 
         self.turn_total += total
         potential_score = self.current_player.score + self.turn_total
-        print(f"Current turn total: {self.turn_total}\nPotential score: {potential_score}")
+        #tidied uppp
+        print(
+            f"📈 Current turn total: {self.turn_total:>{self._NUM_W}}\n"
+            f"😛 Potential score:    {potential_score:>{self._NUM_W}}"
+        )
         return True
 
     def cheat(self) -> None:
         """Instantly give the human player a near-win score"""
         self.human_player.score = self.win_score - 1
-        print(f"{self.human_player.name} now has {self.human_player.score} points. ")
+        print(f"✨ {self.human_player.name} now has {self.human_player.score} points.")

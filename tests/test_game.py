@@ -112,3 +112,38 @@ class TestGame:
         game.hold_and_check_win()
         assert game.game_over is True
         assert game.current_player.score >= game.win_score  # after holding, other_player is the human who just scored
+
+    def test_cheat_sets_human_near_win(self):
+        """
+        Cheat should set the human player's score to win_score - 1
+        """
+        game = Game("Human", "CPU", highscore=Highscore())
+        assert game.human_player.score == 0
+        game.cheat()
+        assert game.human_player.score == game.win_score - 1
+
+    def test_computer_turn_holds_and_swaps_when_ai_requests(self, monkeypatch):
+        """
+        If the AI decides to hold, the computer banks points and turn swaps to human
+        """
+        game = Game("Human", "CPU", highscore=Highscore())
+
+        # Make it the computer's turn
+        game.swap_turn()
+        assert game.current_player == game.computer_player
+
+        # Ensure rolls are safe (no 1s), and predictable
+        game.roll_dice = lambda: (3, 4, 7)
+
+        # Force AI to always hold after one (safe) roll
+        monkeypatch.setattr(game.computer_ai, "decide", lambda *args, **kwargs: True)
+
+        # Run one computer turn
+        game.computer_turn()
+
+        # Computer should have banked 7 points
+        assert game.computer_player.score == 7
+        # After holding (and no win), turn should swap back to human
+        assert game.current_player == game.human_player
+        # Turn total must be reset after holding/swapping
+        assert game.turn_total == 0

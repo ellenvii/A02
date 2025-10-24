@@ -12,7 +12,7 @@ class Shell(cmd.Cmd):
     prompt = "(game)"
 
     def __init__(self):  
-        """ Creates a game object with default human and computer name being You and Robot fella respectively """
+        """ Creates a game object with default human and computer name being You and Robot fella """
         super().__init__()
         self.game = game.Game(human_name="You", computer_name="Robot fella", highscore = self.highscore)
 
@@ -27,11 +27,26 @@ class Shell(cmd.Cmd):
 
     def do_change(self, arg):
         """Changes player name"""
-        print(f"Your current name: {self.game.human_player.name}\n"
-        f"Computer's current name: {self.game.computer_player.name}\n")
-        new_name = input("What is your new name? ")
-        self.game.human_player.set_name(new_name)
-        print(f'Your name is now {new_name}. ')
+        print(
+            f"👤 Your current name: {self.game.human_player.name}\n"
+            f"🤖 Computer's current name: {self.game.computer_player.name}\n"
+        )
+        while True:
+            new_name = input("✨ Enter your new name: ").strip()
+
+            if not new_name:
+                print("⚠️  Name cannot be empty. Try again.")
+                continue
+            if len(new_name) < 2:
+                print("⚠️  Name must be at least 2 characters long.")
+                continue
+            if any(ch in new_name for ch in "!@#$%^&*()[]{}<>?/\\|=+~`"):
+                print("⚠️  Please avoid special characters in your name.")
+                continue
+            self.game.human_player.set_name(new_name)
+            print(f"✅ Your name is now '{new_name}'.\n")
+            break
+
     
     def do_showhist(self, arg):
         """Display histograms for both players."""
