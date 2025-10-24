@@ -14,8 +14,11 @@ instructions = "\nLet's play a game.\n" \
 "If a single ⚀ is rolled, you score nothing and your turn ends.\n" \
 "If 2 ⚀ are rolled, your score resets and your turn ends.\n" \
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 "You have 10 turns to score as many points as possible.\n"
 =======
+=======
+>>>>>>> Stashed changes
 "First to 100 wins!\n"
 >>>>>>> Stashed changes
 
