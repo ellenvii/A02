@@ -17,7 +17,6 @@ instructions = (
     "First to 100 wins!\n"
 )
 
-
 def main():
     print(instructions)
     shell.Shell().cmdloop()
