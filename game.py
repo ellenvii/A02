@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Optional, Tuple
 from player import Player
 from dice_hand import DiceHand
 from histogram import Histogram
@@ -5,10 +7,17 @@ from highscore import Highscore
 from intelligence import Intelligence
 
 class Game:
-    """ Game class """
+    """Game class"""
     win_score = 100
 
-    def __init__(self, human_name: str, computer_name: str, highscore = None):
+    def __init__(
+        self,
+        human_name: str,
+        computer_name: str,
+        highscore: Optional[Highscore] = None,
+        human_histogram: Optional[Histogram] = None,
+        computer_histogram: Optional[Histogram] = None,
+    ) -> None:
         """Constructor"""
         self.winner = None
         self.loser = None
@@ -25,61 +34,81 @@ class Game:
         self.human_round = 0
         self.computer_round = 0
 
-        self.human_histogram = Histogram(self.human_player)
-        self.computer_histogram = Histogram(self.computer_player)
+        #reuse histograms if provided
+        if human_histogram is None:
+            self.human_histogram = Histogram(self.human_player)
+        else:
+            human_histogram.set_player(self.human_player)
+            self.human_histogram = human_histogram
+
+        if computer_histogram is None:
+            self.computer_histogram = Histogram(self.computer_player)
+        else:
+            computer_histogram.set_player(self.computer_player)
+            self.computer_histogram = computer_histogram
 
         self.highscore = highscore
         self.computer_ai = Intelligence(self.computer_player, difficulty="normal")
 
-    @property 
-    def current_player(self):
-        """returns the current player"""
+    @property
+    def current_player(self) -> Player:
+        """Return the player whose turn it is."""
         return self.players[self.turn_index]
-    
-    def swap_turn(self):
-        """Swaps player"""
+
+    @property
+    def other_player(self) -> Player:
+        """Return the non-active player."""
+        return self.players[(self.turn_index + 1) % len(self.players)]
+
+    def swap_turn(self) -> None:
+        """Swap to the other player and reset the turn total."""
         self.turn_total = 0
         self.turn_index = (self.turn_index + 1) % len(self.players)
-        print(f"\n-- It is now {self.players[self.turn_index].name}'s turn --")
-    
-    @property
-    def other_player(self):
-        """Returns the other player"""
-        return self.players[(self.turn_index + 1) % len(self.players)]
-    
-    def _record_round_end(self):
-        """Record the end of the current player's round into respective player's round count in histogram."""
+        print(f"\n-- It is now {self.current_player.name}'s turn --")
+
+    def _record_round_end(self) -> None:
+        """Record the end of the active player's round in their histogram."""
         if self.current_player is self.human_player:
             self.human_round += 1
             self.human_histogram.add_entry(self.human_round, self.human_player.score)
         else:
             self.computer_round += 1
-            self.computer_histogram.add_entry(self.computer_round, self.computer_player.score)
+            self.computer_histogram.add_entry(
+                self.computer_round, self.computer_player.score
+            )
 
-    
-    def roll_dice(self):
-        """Rolls dice"""
-        return self.dice_hand.roll() 
-    
-    def hold_and_check_win(self):
-        """Allows player to hold and bank points"""
+    def roll_dice(self) -> Tuple[int, int, int]:
+        """Roll both dice and return (r1, r2, total)."""
+        return self.dice_hand.roll()
+
+    def hold_and_check_win(self) -> None:
+        """Bank the turn total for the current player and check for a win."""
         self.current_player.hold(self.turn_total)
-        print(f"{self.current_player.name} banks {self.turn_total}. Total = {self.current_player.score}")
+        print(
+            f"{self.current_player.name} banks {self.turn_total}. "
+            f"Total = {self.current_player.score}"
+        )
 
         self._record_round_end()
         self.turn_total = 0
 
         if self.current_player.score >= self.win_score:
-            print(f"\n {self.current_player.name} wins with {self.current_player.score} points!")
-            self.highscore.add_score(self.current_player.name, self.current_player.score)
+            print(
+                f"\n{self.current_player.name} wins with "
+                f"{self.current_player.score} points!"
+            )
+            # Only add to highscore if provided by caller/tests
+            if self.highscore is not None:
+                self.highscore.add_score(
+                    self.current_player.name, self.current_player.score
+                )
             self.game_over = True
-        
-         
-    def start(self):
-        """Starts a game"""
-        print('Game has started!')
-        print(f'Player 1: {self.human_player.name}')
-        print(f'Player 2: {self.computer_player.name}')
+
+    def start(self) -> None:
+        """Run the main game loop (interactive)."""
+        print("Game has started!")
+        print(f"Player 1: {self.human_player.name}")
+        print(f"Player 2: {self.computer_player.name}")
         print(f"\n-- {self.current_player.name} starts --")
 
         while not self.game_over:
@@ -88,64 +117,68 @@ class Game:
             else:
                 self.computer_turn()
 
-    def cheat(self):
-        """Allows player to cheat"""
-        pass
-    
-    def computer_turn(self):
-        """Executes what happens during the computer's turn"""
+    def cheat(self) -> None:
+        """Cheat hook (intentionally left blank for tests/extension)."""
+        return
+
+    def computer_turn(self) -> None:
+        """Automate the computer player's turn using the AI policy."""
         while True:
             r1, r2, total = self.roll_dice()
             if not self.handle_roll(r1, r2, total):
                 return
 
             projected = self.current_player.score + self.turn_total
-            should_hold = self.computer_ai.decide(self.turn_total, projected, self.win_score)
+            should_hold = self.computer_ai.decide(
+                self.turn_total, projected, self.win_score
+            )
 
             if should_hold:
-                print(f"{self.computer_player.name} decides to hold with {self.turn_total}.")
+                print(
+                    f"{self.computer_player.name} decides to hold with "
+                    f"{self.turn_total}."
+                )
                 self.hold_and_check_win()
                 if not self.game_over:
                     self.swap_turn()
                 return
 
-    def human_turn(self):
-        """Executes what happens during the human player's turn"""
+    def human_turn(self) -> None:
+        """Run the human player's interactive turn."""
         while True:
             r1, r2, total = self.roll_dice()
-            if not self.handle_roll(r1,r2, total):
+            if not self.handle_roll(r1, r2, total):
                 return
-            hold_or_roll = input("Do you wish to hold or roll again? ")
-            if hold_or_roll == "h":
+            user_choice = input("Do you wish to hold or roll again? ")
+            if user_choice == "h":
                 self.hold_and_check_win()
                 if not self.game_over:
                     self.swap_turn()
                 return
-    
-    def handle_roll(self, r1, r2, total):
-        """Game logic"""
+
+    def handle_roll(self, r1: int, r2: int, total: int) -> bool:
+        """
+        Handle the outcome of a dice roll.
+
+        Returns:
+            True if the player may continue the turn, False if turn ends.
+        """
         if r1 == 1 and r2 == 1:
-            print("Bruh you scored snake eyes all ur points are gone. ")
+            print("Snake eyes! Your total score resets and your turn ends.")
             self.current_player.reset_score()
             self.turn_total = 0
-
             self._record_round_end()
-
             self.swap_turn()
             return False
-    
-        elif r1 == 1 or r2 == 1:
-            print("I see a 1 — you got no points this turn.")
+
+        if r1 == 1 or r2 == 1:
+            print("Rolled a 1 — no points this turn.")
             self.turn_total = 0
-
             self._record_round_end()
-
             self.swap_turn()
             return False
-        
-        else:
-            self.turn_total += total
-            potential_score = self.current_player.score + self.turn_total
-            print(f"Current turn total:{self.turn_total}\nPotential score: {potential_score}")
-            return True
-    
+
+        self.turn_total += total
+        potential_score = self.current_player.score + self.turn_total
+        print(f"Current turn total: {self.turn_total}\nPotential score: {potential_score}")
+        return True

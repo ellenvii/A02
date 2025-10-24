@@ -1,7 +1,5 @@
-import io
-import sys
+'# tests/test_histogram.py'
 from histogram import Histogram
-
 
 class DummyPlayer:
     def __init__(self, name):
@@ -55,12 +53,13 @@ class TestHistogram:
         histogram.add_entry(2, 7)   # 7 // 5 = 1 hash (min 1)
 
         histogram.show()
-        captured = capsys.readouterr().out.splitlines()
+        captured_lines = capsys.readouterr().out.splitlines()
 
-        # Extract bars
-        bars = [line for line in captured if line.strip().startswith("Round")]
-        assert "#####" in bars[0]  # 5 hashes for 25 points
-        assert "#" in bars[1] and "##" not in bars[1]  # exactly 1 hash for 7 points
+        # only look at "Round" lines
+        round_lines = [line for line in captured_lines if line.strip().startswith("Round")]
+        assert "#####" in round_lines[0]  # 5 hashes for 25 points
+        # exactly 1 hash for 7 points (no double hash)
+        assert "#" in round_lines[1] and "##" not in round_lines[1]
 
     def test_show_uses_player_name_if_exists(self, capsys):
         """
@@ -103,3 +102,30 @@ class TestHistogram:
         histogram.show()
         captured = capsys.readouterr().out
         assert "----------------------------------------" in captured
+
+    def test_start_new_game_creates_new_session(self, capsys):
+        """
+        Test that starting a new game session splits printed output per game.
+        """
+        histogram = Histogram("PlayerX")
+        histogram.add_entry(1, 10)
+        histogram.add_entry(2, 20)
+
+        # begin a new game (new session) and add more entries
+        histogram.start_new_game()
+        histogram.add_entry(1, 5)
+        histogram.add_entry(2, 30)
+
+        histogram.show()
+        out = capsys.readouterr().out
+
+        # Should label games if more than one session exists
+        assert "Game 1" in out
+        assert "Game 2" in out
+
+        # Round lines should appear for both sessions
+        assert "Round  1: " in out
+        assert "(10 pts)" in out
+        assert "(20 pts)" in out
+        assert "(5 pts)" in out
+        assert "(30 pts)" in out
