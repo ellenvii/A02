@@ -1,6 +1,23 @@
 # A02
 Sustainable Methods Project
 
+# Two-Dice Pigs
+
+Two-Dice Pigs involves collecting as many points as possible.
+You roll two dice — if neither shows ⚀, add those points to your score.
+You may roll again or choose to hold.
+If a single ⚀ is rolled, you score nothing and your turn ends.
+If two ⚀ are rolled, your score resets and your turn ends.
+First to 100 wins!
+
+# Game Intelligence Implementation
+
+Before starting the game, you may choose difficulty of easy, normal or hard.
+By default, it is normal.
+Easy entails that it will hold atv a lower number, with normal and hard holding at higher numbers. 
+To change difficulty, typing 'difficulty hard' before starting will change the difficulty to hard.
+The same goes for easy and normal.
+
 # Project Structure
 ```bash
 A02/
@@ -40,10 +57,10 @@ pip install pytest          # Windows
 ```
 
 ## Running all tests
-To be able to run all tests you only need to write "pytest" on the terminal
+To be able to run all tests you only need to write "make pytest" in the terminal.
 
 ```bash
-pytest
+make pytest
 ```
 
 ## Running specific files
@@ -61,3 +78,22 @@ FAILED tests/test_game.py::TestGame::test_win_score_equal_100 - AttributeError: 
 FAILED tests/test_game.py::TestGame::test_end_game_finishes_turns - assert 44 == 0
 =================================== 3 failed, 7 passed in 0.06s ===================================
 ```
+
+# Generate UML
+
+```bash
+make pyreverse
+```
+
+# Generate PyDocs
+
+```bash
+make pydoc
+```
+
+# Checking Coverage and Generating Report
+
+```bash
+make coverage
+```
+
