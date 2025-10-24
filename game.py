@@ -52,14 +52,14 @@ class Game:
 
     @property
     def current_player(self) -> Player:
-        """Return the player whose turn it is."""
+        """Return the player whose turn it is. """
         return self.players[self.turn_index]
 
     @property
     def other_player(self) -> Player:
         """Return the non-active player."""
         return self.players[(self.turn_index + 1) % len(self.players)]
-
+    
     def swap_turn(self) -> None:
         """Swap to the other player and reset the turn total."""
         self.turn_total = 0
@@ -97,7 +97,7 @@ class Game:
                 f"\n{self.current_player.name} wins with "
                 f"{self.current_player.score} points!"
             )
-            # Only add to highscore if provided by caller/tests
+            # Only add to highscore if it must be done for tests
             if self.highscore is not None:
                 self.highscore.add_score(
                     self.current_player.name, self.current_player.score
@@ -111,15 +111,15 @@ class Game:
         print(f"Player 2: {self.computer_player.name}")
         print(f"\n-- {self.current_player.name} starts --")
 
+        cheat_choice = input('Do you feel like cheating? (y/n) '.lower().strip())
+        if cheat_choice == "y":
+            self.cheat()
+
         while not self.game_over:
             if self.current_player is self.human_player:
                 self.human_turn()
             else:
                 self.computer_turn()
-
-    def cheat(self) -> None:
-        """Cheat hook (intentionally left blank for tests/extension)."""
-        return
 
     def computer_turn(self) -> None:
         """Automate the computer player's turn using the AI policy."""
@@ -182,3 +182,8 @@ class Game:
         potential_score = self.current_player.score + self.turn_total
         print(f"Current turn total: {self.turn_total}\nPotential score: {potential_score}")
         return True
+
+    def cheat(self) -> None:
+        """Instantly give the human player a near-win score"""
+        self.human_player.score = self.win_score - 1
+        print(f"{self.human_player.name} now has {self.human_player.score} points. ")

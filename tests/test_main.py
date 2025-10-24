@@ -51,7 +51,7 @@ def test_main_prints_instructions_and_calls_cmdloop(monkeypatch, capsys):
 
 def test_module_runs_when_invoked_as_script(monkeypatch, capsys):
     """
-    Pretend we ran `python -m main` and check that it prints stuff and calls cmdloop().
+    Pretend we ran `python -m main` and check that it prints stuff and calls the cmdloop().
     """
     called = {"cmdloop": 0}
 
