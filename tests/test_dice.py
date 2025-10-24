@@ -5,10 +5,10 @@ Dice class testing
 from dice import Die
 
 class TestDie:
-    """
-    Tests if the dice roll is in range
-    """
     def test_roll_range(self):
+        """
+        Tests if the dice roll is in range
+        """
         d = Die()
         for i in range(20):
             x = d.roll()
@@ -16,7 +16,7 @@ class TestDie:
     
     def test_returns_integer(self):
         """
-        
+        testing it returns integers
         """
         dice = Die()
         result = dice.roll()
@@ -24,14 +24,14 @@ class TestDie:
 
     def test_default_sides_to_six(self):
         """
-        
+        tests the default side of the die is 6
         """
         dice = Die()
         assert dice.sides == 6
 
     def test_rolls_are_different(self):
         """
-        
+        testing when tolling the rolls are different 
         """
         dice = Die(6)
         results = set()
@@ -41,30 +41,39 @@ class TestDie:
 
     def test_last_roll_is_remembered(self):
         """
-        
+        testing if the last roll is remembered
         """
         dice = Die()
         rolled_value = dice.roll()
         assert dice.last_roll == rolled_value
     
     def test_graphics_returned_correct(self):
+        """
+        testing graphics are correct to its corresponding value
+        """
         dice = Die(2)
         assert dice.get_dice_graphics(1) == '⚀'
 
     def test_many_rolls_in_range(self):
+        """
+        testing that each roll is inside the range
+        """
         dice = Die()
         for _ in range(5):
             value = dice.roll()
             assert 1 <= value <= 6
 
     def test_lenght_for_graphics():
+        """
+        testing the length for graphics
+        """
         dice = Die()
         assert len(dice.dice_graphics) == 6
 
     # Some error handling tests
     def test_invalid_sides_are_rejected(self):
         """
-        
+        testing that invalid sides are rejected
         """
         try:
             dice = Die(1)
@@ -74,7 +83,7 @@ class TestDie:
         
     def test_negative_sides_are_rejected(self):
         """
-        
+        testing that negatives sides are rejected
         """
         try:
             dice = Die(-5)
