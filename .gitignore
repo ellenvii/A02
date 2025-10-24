@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 classes_A02.svg
 packages_A02.svg
+.coverage

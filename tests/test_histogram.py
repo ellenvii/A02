@@ -1,96 +1,105 @@
-"""
-Histogram class testing
-"""
-
+import io
+import sys
 from histogram import Histogram
 
+
+class DummyPlayer:
+    def __init__(self, name):
+        self.name = name
+
+
 class TestHistogram:
-    def test_initialization_with_zeros(self):
+    def test_initialization_starts_empty(self):
         """
-        testing it initializes with zeros hehehe
+        Test that Histogram initializes with an empty data list.
         """
-        histogram = Histogram()
-        for value in range(1,7):
-            assert histogram.get_count(value) == 0
-        
-    def test_correct_range_when_initialize(self):
-        """
-        testing there is a correct range when it initialize
-        """
-        histogram = Histogram()
-        assert histogram.min_value == 1
-        assert histogram.max_value == 6
+        player = DummyPlayer("Player1")
+        histogram = Histogram(player)
+        assert histogram.player == player
+        assert histogram.data == []
 
-    def test_ability_to_add_single_roll(self):
+    def test_add_entry_adds_tuple(self):
         """
-        testing to add a single roll
+        Test that add_entry correctly appends a (round_number, score) tuple.
         """
-        histogram = Histogram()
-        histogram.add_roll(3)
-        assert histogram.get_count(3) == 1
+        histogram = Histogram("Computer")
+        histogram.add_entry(1, 25)
+        histogram.add_entry(2, 40)
+        assert histogram.data == [(1, 25), (2, 40)]
 
-    def test_reset_working(self):
+    def test_show_prints_histogram_output(self, capsys):
         """
-        testing if the reset method works properly
+        Test that show() prints the expected histogram text.
         """
-        histogram = Histogram()
-        histogram.add_roll(1)
-        histogram.add_roll(2)
-        histogram.add_roll(3)
-        histogram.reset()
-        assert histogram.total_rolls == 0
-        for value in range(1,7):
-            assert histogram.get_count(value) == 0
+        player = DummyPlayer("Tester")
+        histogram = Histogram(player)
+        histogram.add_entry(1, 10)
+        histogram.add_entry(2, 30)
 
-    def test_adding_same_roll_multiple_times(self):
-        """
-        tests adding the same exact roll for many times
-        """
-        histogram = Histogram()
-        for _ in range(5):
-            histogram.add_roll(4)
-            assert histogram.get_count(4) == 5
+        histogram.show()
+        captured = capsys.readouterr().out
 
-    def test_can_add_more_rolls_after_reset(self):
-        """
-        testing thaa it it capable to add more rolls after it is reseted
-        """
-        histogram = Histogram()
-        histogram.add_roll(5)
-        histogram.reset()
-        histogram.add_roll(2)
-        assert histogram.get_count(2) == 1
-        assert histogram.total_rolls == 1
+        assert "Histogram for Tester" in captured
+        assert "Round  1:" in captured
+        assert "Round  2:" in captured
+        assert "(10 pts)" in captured
+        assert "(30 pts)" in captured
+        assert "#" in captured
 
-    def test_empty_equals_zero(self):
+    def test_histogram_bar_length_is_score_divided_by_five(self, capsys):
         """
-        testign when empty
+        Test that the number of '#' symbols corresponds to score // 5.
         """
-        histogram = Histogram()
-        assert histogram.total_rolls == 0
+        histogram = Histogram("Player")
+        histogram.add_entry(1, 25)  # 25 // 5 = 5 hashes
+        histogram.add_entry(2, 7)   # 7 // 5 = 1 hash (min 1)
 
-    def test_not_valid_roll_dont_change_anything(self):
-        """
-        teting that invalid rolls doesnt change anything
-        """
-        histogram = Histogram()
-        histogram.add_roll(1) # nit valid total, there are 2 dices on each hand
-        histogram.add_roll(13) #not valid either
-        for i in range(2, 13):
-            assert histogram.get_count(i) == 0
-        assert histogram.total_rolls == 0
+        histogram.show()
+        captured = capsys.readouterr().out.splitlines()
 
+        # Extract bars
+        bars = [line for line in captured if line.strip().startswith("Round")]
+        assert "#####" in bars[0]  # 5 hashes for 25 points
+        assert "#" in bars[1] and "##" not in bars[1]  # exactly 1 hash for 7 points
 
-    def test_adding_different_totals(self):
+    def test_show_uses_player_name_if_exists(self, capsys):
         """
-        tests adding multiple totals
+        Test that show() uses player's name if the object has one.
         """
-        histogram = Histogram()
-        rolls = [2, 5, 7, 12, 5]
-        for r in rolls:
-            histogram.add_roll()
-        assert histogram.get_count(2) == 1
-        assert histogram.get_count(5) == 2
-        assert histogram.get_count(7) == 1
-        assert histogram.get_count(12) == 1
-        assert histogram.total_rolls == 5
+        player = DummyPlayer("Alex")
+        histogram = Histogram(player)
+        histogram.add_entry(1, 15)
+
+        histogram.show()
+        captured = capsys.readouterr().out
+        assert "Histogram for Alex" in captured
+
+    def test_show_fallback_to_str_if_no_name(self, capsys):
+        """
+        Test that show() falls back to str(player) if player has no 'name' attribute.
+        """
+        histogram = Histogram("AI_Bot")
+        histogram.add_entry(1, 20)
+        histogram.show()
+        captured = capsys.readouterr().out
+        assert "Histogram for AI_Bot" in captured
+
+    def test_multiple_rounds_stored_in_order(self):
+        """
+        Test that entries preserve the correct order of rounds.
+        """
+        histogram = Histogram("CPU")
+        rounds = [(1, 10), (2, 15), (3, 22)]
+        for r, s in rounds:
+            histogram.add_entry(r, s)
+        assert histogram.data == rounds
+
+    def test_show_prints_separator_lines(self, capsys):
+        """
+        Test that show() includes separator lines of dashes before and after the bars.
+        """
+        histogram = Histogram("CPU")
+        histogram.add_entry(1, 10)
+        histogram.show()
+        captured = capsys.readouterr().out
+        assert "----------------------------------------" in captured

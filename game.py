@@ -110,17 +110,17 @@ class Game:
                 return
 
     def human_turn(self):
-            """Executes what happens during the human player's turn"""
-            while True:
-                r1, r2, total = self.roll_dice()
-                if not self.handle_roll(r1,r2, total):
-                     return
-                hold_or_roll = input("Do you wish to hold or roll again? ")
-                if hold_or_roll == "h":
-                    self.hold_and_check_win()
-                    if not self.game_over:
-                         self.swap_turn()
-                    return
+        """Executes what happens during the human player's turn"""
+        while True:
+            r1, r2, total = self.roll_dice()
+            if not self.handle_roll(r1,r2, total):
+                return
+            hold_or_roll = input("Do you wish to hold or roll again? ")
+            if hold_or_roll == "h":
+                self.hold_and_check_win()
+                if not self.game_over:
+                    self.swap_turn()
+                return
     
     def handle_roll(self, r1, r2, total):
         """Game logic"""

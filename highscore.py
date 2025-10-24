@@ -13,7 +13,7 @@ class Highscore():
         self.scores = sorted(self.scores, key=lambda x: x[1], reverse=True)[:5]
 
     def show(self):
-        """Display the highscores."""
+        """Displays the highscores."""
         if not self.scores:
             print("\nNo highscores yet!\n")
             return

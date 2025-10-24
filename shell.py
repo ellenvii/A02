@@ -1,6 +1,4 @@
-"""
-Using cmd module to create an interface for the main program.
-"""
+"""Using cmd module to create an interface for the main program."""
 
 import game
 import cmd
@@ -13,10 +11,8 @@ class Shell(cmd.Cmd):
     intro = "Welcome to Two-Dice Pigs!\nType ? to list commands.\n"
     prompt = "(game)"
 
-    """
-    Creates a game object with default human and computer name being You and Robot fella respectively
-    """
-    def __init__(self):
+    def __init__(self):  
+        """ Creates a game object with default human and computer name being You and Robot fella respectively """
         super().__init__()
         self.game = game.Game(human_name="You", computer_name="Robot fella", highscore = self.highscore)
 
