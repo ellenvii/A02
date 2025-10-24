@@ -24,6 +24,9 @@ class Shell(cmd.Cmd):
     Starts game
     """
     def do_start(self, arg):
+        """Start a new game."""
+        self.game = game.Game(human_name=self.game.human_player.name, computer_name=self.game.computer_player.name)
+        print("\nStarting a new game!\n")
         self.game.start()
 
     def do_change(self, arg):
