@@ -12,8 +12,8 @@ instructions = "\nLet's play a game.\n" \
 "You roll 2 dice, if niether show ⚀, add those points to your score.\n" \
 "You may roll again, or choose to hold.\n" \
 "If a single ⚀ is rolled, you score nothing and your turn ends.\n" \
-"If 2 ⚀ are rolled, your score resets and your turn ends.\n" \
-"You have 10 turns to score as many points as possible.\n"
+"If 2 ⚀ are rolled, your score resets and your turn ends.\n"
+"First to 100 wins!\n"
 
 def main():
     print(instructions)

@@ -1,6 +1,26 @@
 # A02
 Sustainable Methods Project
 
+# Two-Dice Pigs
+
+Two-Dice Pigs involves collecting as many points as possible.
+You roll two dice — if neither shows ⚀, add those points to your score.
+You may roll again or choose to hold.
+If a single ⚀ is rolled, you score nothing and your turn ends.
+If two ⚀ are rolled, your score resets and your turn ends.
+First to 100 wins!
+
+# Game Intelligence Implementation
+
+Before starting the game, you may choose difficulty of easy, normal or hard.
+By default, it is normal.
+Easy entails that it will hold atv a lower number, with normal and hard holding at higher numbers. 
+To change difficulty, typing 'difficulty hard' before starting will change the difficulty to hard.
+The same goes for easy and normal.
+
+# Running and Installing 
+
+
 
 # Instructions for Pytest:
 
