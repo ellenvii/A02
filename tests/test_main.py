@@ -17,7 +17,7 @@ def test_instructions_text_sanity():
     assert "roll 2 dice" in text or "You roll 2 dice" in text
     assert "single ⚀ is rolled" in text
     assert "2 ⚀ are rolled" in text
-    assert "10 turns" in text
+    assert "First to 100" in text
 
 
 def test_main_prints_instructions_and_calls_cmdloop(monkeypatch, capsys):
