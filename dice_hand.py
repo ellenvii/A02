@@ -17,7 +17,7 @@ class DiceHand:
         g1 = self.die1.get_dice_graphics(r1)
         g2 = self.die2.get_dice_graphics(r2)
         total = r1 + r2 
-        print(f'You rolled {g1} {g2} ({r1}+{r2}={total})! ')
+        print(f'\nYou rolled {g1} {g2} ({r1}+{r2}={total})! ')
         return r1, r2, total
     
     
