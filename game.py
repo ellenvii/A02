@@ -2,6 +2,7 @@ from player import Player
 from dice_hand import DiceHand
 from histogram import Histogram
 from highscore import Highscore
+from intelligence import Intelligence
 
 class Game:
     """ Game class """
@@ -28,6 +29,7 @@ class Game:
         self.computer_histogram = Histogram(self.computer_player)
 
         self.highscore = highscore
+        self.computer_ai = Intelligence(self.computer_player, difficulty="normal")
 
     @property 
     def current_player(self):
@@ -92,14 +94,16 @@ class Game:
     
     def computer_turn(self):
         """Executes what happens during the computer's turn"""
-        HOLD_AT = 20  # super basic strategy
         while True:
             r1, r2, total = self.roll_dice()
             if not self.handle_roll(r1, r2, total):
                 return
+
             projected = self.current_player.score + self.turn_total
-            if self.turn_total >= HOLD_AT or projected >= self.win_score:
-                print(f"{self.computer_player.name} holds with {self.turn_total}.")
+            should_hold = self.computer_ai.decide(self.turn_total, projected, self.win_score)
+
+            if should_hold:
+                print(f"{self.computer_player.name} decides to hold with {self.turn_total}.")
                 self.hold_and_check_win()
                 if not self.game_over:
                     self.swap_turn()

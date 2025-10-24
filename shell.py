@@ -30,6 +30,9 @@ class Shell(cmd.Cmd):
         self.game.start()
 
     def do_change(self, arg):
+        """Changes player name"""
+        print(f"Your current name: {self.game.human_player.name}\n"
+        f"Computer's current name: {self.game.computer_player.name}\n")
         new_name = input("What is your new name? ")
         self.game.human_player.set_name(new_name)
         print(f'Your name is now {new_name}. ')
@@ -42,3 +45,13 @@ class Shell(cmd.Cmd):
     def do_highscore(self, arg):
         """Show highscores."""
         self.highscore.show()
+    
+    def do_difficulty(self, arg):
+        """Set computer AI difficulty: easy, normal, or hard."""
+        level = arg.strip().lower()
+        if level not in ["easy", "normal", "hard"]:
+            print("Invalid difficulty. Choose: easy, normal, or hard.")
+            return
+        self.game.computer_ai.difficulty = level
+        print(f"Computer difficulty set to: {level}")
+
