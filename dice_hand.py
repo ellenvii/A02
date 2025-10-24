@@ -4,7 +4,6 @@ class DiceHand:
 
     def __init__(self, num_of_dice):    
         """Constructor"""   
-        
         self.die1 = Die()
         self.die2 = Die()
         self.current_value = (0, 0)

@@ -14,11 +14,11 @@ class Shell(cmd.Cmd):
     prompt = "(game)"
 
     """
-    Creates a game object with default human and computer name being Ellen and Robot fella respectively
+    Creates a game object with default human and computer name being You and Robot fella respectively
     """
     def __init__(self):
         super().__init__()
-        self.game = game.Game(human_name="Ellen", computer_name="Robot fella", highscore = self.highscore)
+        self.game = game.Game(human_name="You", computer_name="Robot fella", highscore = self.highscore)
 
     def do_start(self, arg):
         """Start a new game."""
