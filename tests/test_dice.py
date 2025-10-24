@@ -1,6 +1,7 @@
 import pytest
 from dice import Die
 
+
 class TestDie:
     def test_roll_range(self):
         """
@@ -10,7 +11,7 @@ class TestDie:
         for _ in range(20):
             x = d.roll()
             assert 1 <= x <= 6
-    
+
     def test_returns_integer(self):
         """
         testing it returns integers
@@ -28,7 +29,7 @@ class TestDie:
 
     def test_rolls_are_different(self):
         """
-        testing when tolling the rolls are different 
+        testing when tolling the rolls are different
         """
         dice = Die(6)
         results = set()
@@ -47,13 +48,13 @@ class TestDie:
         assert isinstance(dice.last_roll, int)
         dice.last_roll = rolled_value
         assert dice.last_roll == rolled_value
-    
+
     def test_graphics_returned_correct(self):
         """
         testing graphics are correct to its corresponding value
         """
         dice = Die(2)
-        assert dice.get_dice_graphics(1) == '⚀'
+        assert dice.get_dice_graphics(1) == "⚀"
 
     def test_many_rolls_in_range(self):
         """
@@ -80,7 +81,7 @@ class TestDie:
         dice = Die(1)
         for _ in range(5):
             assert dice.roll() == 1
-        
+
     def test_negative_sides_are_rejected(self):
         """
         testing that negatives sides are rejected
@@ -89,4 +90,3 @@ class TestDie:
         # random.randint(1, -5) raises ValueError on roll
         with pytest.raises(ValueError):
             dice.roll()
-

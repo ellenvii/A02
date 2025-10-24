@@ -1,5 +1,7 @@
-'# tests/test_histogram.py'
+"# tests/test_histogram.py"
+
 from histogram import Histogram
+
 
 class DummyPlayer:
     def __init__(self, name):
@@ -50,13 +52,15 @@ class TestHistogram:
         """
         histogram = Histogram("Player")
         histogram.add_entry(1, 25)  # 25 // 5 = 5 hashes
-        histogram.add_entry(2, 7)   # 7 // 5 = 1 hash (min 1)
+        histogram.add_entry(2, 7)  # 7 // 5 = 1 hash (min 1)
 
         histogram.show()
         captured_lines = capsys.readouterr().out.splitlines()
 
         # only look at "Round" lines
-        round_lines = [line for line in captured_lines if line.strip().startswith("Round")]
+        round_lines = [
+            line for line in captured_lines if line.strip().startswith("Round")
+        ]
         assert "#####" in round_lines[0]  # 5 hashes for 25 points
         # exactly 1 hash for 7 points (no double hash)
         assert "#" in round_lines[1] and "##" not in round_lines[1]

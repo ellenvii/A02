@@ -18,9 +18,6 @@ Easy entails that it will hold atv a lower number, with normal and hard holding 
 To change difficulty, typing 'difficulty hard' before starting will change the difficulty to hard.
 The same goes for easy and normal.
 
-# Running and Installing 
-
-
 # Project Structure
 ```bash
 A02/
@@ -60,10 +57,10 @@ pip install pytest          # Windows
 ```
 
 ## Running all tests
-To be able to run all tests you only need to write "pytest" on the terminal
+To be able to run all tests you only need to write "make pytest" in the terminal.
 
 ```bash
-pytest
+make pytest
 ```
 
 ## Running specific files
@@ -82,4 +79,21 @@ FAILED tests/test_game.py::TestGame::test_end_game_finishes_turns - assert 44 ==
 =================================== 3 failed, 7 passed in 0.06s ===================================
 ```
 
-All commands are found in the makefile
+# Generate UML
+
+```bash
+make pyreverse
+```
+
+# Generate PyDocs
+
+```bash
+make pydoc
+```
+
+# Checking Coverage and Generating Report
+
+```bash
+make coverage
+```
+

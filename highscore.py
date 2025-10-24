@@ -1,6 +1,7 @@
 import player
 
-class Highscore():
+
+class Highscore:
     """Keeps track of the highest scores across games."""
 
     def __init__(self):
@@ -17,7 +18,7 @@ class Highscore():
         if not self.scores:
             print("\nNo highscores yet!\n")
             return
-        
+
         print("\n🏆 Highscores 🏆")
         for i, (name, score) in enumerate(self.scores, start=1):
             print(f"{i}. {name}: {score} points")

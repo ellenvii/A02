@@ -1,5 +1,6 @@
 from highscore import Highscore
 
+
 class TestHighscore:
 
     def test_empty_when_initialized(self):
@@ -14,7 +15,9 @@ class TestHighscore:
         tests that crear works as a reset for the scores
         """
         highscore = Highscore()
-        highscore.add_score("player1", 76)  # cant come up with names so im just putting player, but it actually is for names
+        highscore.add_score(
+            "player1", 76
+        )  # cant come up with names so im just putting player, but it actually is for names
 
         def _clear():
             highscore.scores.clear()
@@ -30,8 +33,12 @@ class TestHighscore:
         highscore = Highscore()
         highscore.add_score("player1", 76)
 
-        exists_player1 = any(n.lower() == "player1".lower() for n, _ in highscore.scores)
-        exists_player4 = any(n.lower() == "player4".lower() for n, _ in highscore.scores)
+        exists_player1 = any(
+            n.lower() == "player1".lower() for n, _ in highscore.scores
+        )
+        exists_player4 = any(
+            n.lower() == "player4".lower() for n, _ in highscore.scores
+        )
 
         assert exists_player1 is True
         assert exists_player4 is False
@@ -82,18 +89,22 @@ class TestHighscore:
         highscore.add_score("Player1", 87)
         highscore.add_score("Player1", 96)
 
-        best_for_player1 = max(score for name, score in highscore.scores if name == "Player1")
+        best_for_player1 = max(
+            score for name, score in highscore.scores if name == "Player1"
+        )
         assert best_for_player1 == 96
 
     def test_lower_not_replacing_highest(self):
         """
-        tests that the lower score doesnt replace the highest 
+        tests that the lower score doesnt replace the highest
         """
         highscore = Highscore()
         highscore.add_score("Player1", 97)
         highscore.add_score("Player1", 43)
 
-        best_for_player1 = max(score for name, score in highscore.scores if name == "Player1")
+        best_for_player1 = max(
+            score for name, score in highscore.scores if name == "Player1"
+        )
         assert best_for_player1 == 97
 
     def test_ignoring_negative_scores(self):

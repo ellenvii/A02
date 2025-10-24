@@ -3,16 +3,20 @@ import pytest
 
 from intelligence import Intelligence
 
-#Test helpers
+# Test helpers
+
 
 class DummyPlayer:
     def __init__(self, score):
         self.score = score
 
+
 def make_ai(score=0, difficulty="normal"):
     return Intelligence(DummyPlayer(score), difficulty=difficulty)
 
-#Actual tests
+
+# Actual tests
+
 
 def test_decide_returns_bool():
     """
@@ -21,6 +25,7 @@ def test_decide_returns_bool():
     ai = make_ai(score=30, difficulty="normal")
     decision = ai.decide(turn_total=10, potential_score=40, win_score=100)
     assert isinstance(decision, bool)
+
 
 def test_different_difficulty_levels_exist():
     """
@@ -35,12 +40,14 @@ def test_different_difficulty_levels_exist():
     assert ai_normal.difficulty == "normal"
     assert ai_hard.difficulty == "hard"
 
+
 def test_computer_holds_when_close_to_winning():
     """
     If potential_score >= win_score, AI always holds (returns True).
     """
     ai = make_ai(score=75)
     assert ai.decide(turn_total=1, potential_score=100, win_score=100) is True
+
 
 def test_change_difficulty_during_game(monkeypatch):
     """
@@ -58,6 +65,7 @@ def test_change_difficulty_during_game(monkeypatch):
     decision = ai.decide(turn_total=15, potential_score=45, win_score=100)
     assert decision is False  # 'roll'
 
+
 def test_computer_holds_when_turn_total_exceeds_threshold(monkeypatch):
     """
     With a sufficiently high turn_total, AI holds.
@@ -69,6 +77,7 @@ def test_computer_holds_when_turn_total_exceeds_threshold(monkeypatch):
     decision = ai.decide(turn_total=25, potential_score=90, win_score=100)
     assert decision is True  # 'hold'
 
+
 def test_roll_when_below_threshold(monkeypatch):
     """
     If turn_total is below threshold, AI rolls.
@@ -78,6 +87,7 @@ def test_roll_when_below_threshold(monkeypatch):
     ai = make_ai(score=80, difficulty="normal")  # normal hold_at = 18
     decision = ai.decide(turn_total=4, potential_score=56, win_score=100)
     assert decision is False  # 'roll'
+
 
 def test_hard_ai_can_be_cautious_and_hold(monkeypatch):
     """
@@ -89,6 +99,7 @@ def test_hard_ai_can_be_cautious_and_hold(monkeypatch):
     # hard hold_at = 25 + 2 = 27; 30 ≥ 27 → hold
     decision = ai.decide(turn_total=30, potential_score=84, win_score=100)
     assert decision is True  # 'hold'
+
 
 def test_when_safe_computer_rolls(monkeypatch):
     """

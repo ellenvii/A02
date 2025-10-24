@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import List, Tuple, Any
 
+
 class Histogram:
     """histogram to track round number and player's score after each round."""
 

@@ -9,6 +9,7 @@ def test_instructions_text_sanity():
     Checking that the instructions include the key parts of the game rules.
     """
     import main
+
     text = main.instructions
 
     # make sure it mentions the main rules and features
@@ -25,6 +26,7 @@ def test_main_prints_instructions_and_calls_cmdloop(monkeypatch, capsys):
     Make sure main() prints the intro and actually runs Shell().cmdloop().
     """
     import main
+
     importlib.reload(main)
 
     called = {"cmdloop": 0}

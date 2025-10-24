@@ -1,8 +1,9 @@
 from dice_hand import DiceHand
 from dice import Die
 
+
 class TestDiceHand:
-    
+
     def test_get_total_sum(self):
         """
         Tests that the sum of the current dice is calculated correctly
@@ -60,7 +61,7 @@ class TestDiceHand:
 
     def test_integers_returned(self):
         """
-        testing that integers are returned 
+        testing that integers are returned
         """
         dice_hand = DiceHand(2)
         r1, r2, total = dice_hand.roll()
@@ -87,12 +88,12 @@ class TestDiceHand:
             assert total >= 2  # minimum with two dice
 
     def test_current_value_updates_correctly(self):
-       """
-       tetsint that current value aupdates correctly 
-       """
-       dice_hand = DiceHand(2)
-       r1, r2, _ = dice_hand.roll()
-       assert dice_hand.current_value == (r1, r2)
+        """
+        tetsint that current value aupdates correctly
+        """
+        dice_hand = DiceHand(2)
+        r1, r2, _ = dice_hand.roll()
+        assert dice_hand.current_value == (r1, r2)
 
     def test_values_has_corresponding_graphic(self):
         """

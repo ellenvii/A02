@@ -1,5 +1,6 @@
 import random
 
+
 class Intelligence:
     def __init__(self, player, difficulty="normal"):
         """User's choice will determine intelligence"""
@@ -18,15 +19,15 @@ class Intelligence:
         if potential_score >= win_score:
             return True
 
-        #difficulty levels set by roll thrersholds
+        # difficulty levels set by roll thrersholds
         if self.difficulty == "easy":
             hold_at = 10 + random.randint(-3, 3)
         elif self.difficulty == "hard":
             hold_at = 25 + random.randint(-2, 2)
-        else:  #normal
+        else:  # normal
             hold_at = 18 + random.randint(-2, 2)
 
-        if self.player.score < 50: #takes more risks
+        if self.player.score < 50:  # takes more risks
             hold_at += 2
 
         return turn_total >= hold_at

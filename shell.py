@@ -5,23 +5,27 @@ import cmd
 from histogram import Histogram
 from highscore import Highscore
 
+
 class Shell(cmd.Cmd):
 
     highscore = Highscore()
     intro = "Welcome to Two-Dice Pigs!\nType ? to list commands.\n"
     prompt = "(game)"
 
-    def __init__(self):  
-        """ Creates a game object with default human and computer name being You and Robot fella """
+    def __init__(self):
+        """Creates a game object with default human and computer name being You and Robot fella"""
         super().__init__()
-        self.game = game.Game(human_name="You", computer_name="Robot fella", highscore = self.highscore)
+        self.game = game.Game(
+            human_name="You", computer_name="Robot fella", highscore=self.highscore
+        )
 
     def do_start(self, arg):
         """Start a new game."""
-        self.game = game.Game(human_name=self.game.human_player.name, 
-                              computer_name=self.game.computer_player.name,
-                              highscore = self.highscore
-                              )
+        self.game = game.Game(
+            human_name=self.game.human_player.name,
+            computer_name=self.game.computer_player.name,
+            highscore=self.highscore,
+        )
         print("\nStarting a new game!\n")
         self.game.start()
 
@@ -47,7 +51,6 @@ class Shell(cmd.Cmd):
             print(f"✅ Your name is now '{new_name}'.\n")
             break
 
-    
     def do_showhist(self, arg):
         """Display histograms for both players."""
         self.game.human_histogram.show()
@@ -56,7 +59,7 @@ class Shell(cmd.Cmd):
     def do_highscore(self, arg):
         """Show highscores."""
         self.highscore.show()
-    
+
     def do_difficulty(self, arg):
         """Set computer AI difficulty: easy, normal, or hard."""
         level = arg.strip().lower()
@@ -65,4 +68,3 @@ class Shell(cmd.Cmd):
             return
         self.game.computer_ai.difficulty = level
         print(f"Computer difficulty set to: {level}")
-

@@ -1,8 +1,9 @@
 from game import Game
 from highscore import Highscore
 
+
 class TestGame:
-    def test_rolling_one(self): 
+    def test_rolling_one(self):
         """
         Test when 1 is rolled the turn ends and give 0 points
         """
@@ -13,7 +14,9 @@ class TestGame:
         assert result is False
         assert game.turn_total == 0
         # Human’s score didn’t change for a single 1
-        assert game.other_player.score == initial_score  # after handle_roll swap, other_player is the human
+        assert (
+            game.other_player.score == initial_score
+        )  # after handle_roll swap, other_player is the human
 
     def test_win_score_equal_100(self):
         """
@@ -28,7 +31,7 @@ class TestGame:
         # After hold_and_check_win, turn is NOT swapped; current_player is the winner
         assert game.current_player.score >= game.win_score
 
-    def test_start_game_at_zero_scores(self): 
+    def test_start_game_at_zero_scores(self):
         """
         Test both players start with 0 score
         """
@@ -53,7 +56,7 @@ class TestGame:
         game = Game("Human player", "Computer player", highscore=Highscore())
         result = game.roll_dice()
         assert isinstance(result, tuple)
-        assert len(result) == 3                 # (r1, r2, total) 
+        assert len(result) == 3  # (r1, r2, total)
 
     def test_end_game_finishes_turns(self):
         """
@@ -64,7 +67,9 @@ class TestGame:
 
         # Make computer_turn deterministic and non-scoring by forcing a single-1 roll
         game.roll_dice = lambda: (1, 3, 4)
-        game.game_over = True  # original intent: once game is over, turns effectively do nothing
+        game.game_over = (
+            True  # original intent: once game is over, turns effectively do nothing
+        )
         game.computer_turn()
         # With a forced 1, handle_roll ends the turn with 0 banked; score unchanged
         assert game.current_player.score == start_score
@@ -85,7 +90,7 @@ class TestGame:
 
     def test_turn_total(self):
         """
-        Testing total of turns are accumulated 
+        Testing total of turns are accumulated
         """
         game = Game("Human player", "Computer player", highscore=Highscore())
         game.handle_roll(2, 4, 6)  # no 1s → accumulates
@@ -101,7 +106,6 @@ class TestGame:
         game.hold_and_check_win()
         assert game.game_over is False
 
-
     def test_hold_right_before_winning(self):
         """
         testing hold before winning
@@ -111,7 +115,9 @@ class TestGame:
         game.turn_total = 4
         game.hold_and_check_win()
         assert game.game_over is True
-        assert game.current_player.score >= game.win_score  # after holding, other_player is the human who just scored
+        assert (
+            game.current_player.score >= game.win_score
+        )  # after holding, other_player is the human who just scored
 
     def test_cheat_sets_human_near_win(self):
         """

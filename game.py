@@ -6,8 +6,10 @@ from histogram import Histogram
 from highscore import Highscore
 from intelligence import Intelligence
 
+
 class Game:
     """Game class"""
+
     win_score = 100
 
     # widths for prettier alignment
@@ -56,14 +58,14 @@ class Game:
 
     @property
     def current_player(self) -> Player:
-        """Return the player whose turn it is. """
+        """Return the player whose turn it is."""
         return self.players[self.turn_index]
 
     @property
     def other_player(self) -> Player:
         """Return the non-active player."""
         return self.players[(self.turn_index + 1) % len(self.players)]
-    
+
     def swap_turn(self) -> None:
         """Swap to the other player and reset the turn total."""
         self.turn_total = 0
@@ -99,7 +101,9 @@ class Game:
         self.turn_total = 0
 
         if self.current_player.score >= self.win_score:
-            print(f"\n🏆 {self.current_player.name} wins with {self.current_player.score} points!")
+            print(
+                f"\n🏆 {self.current_player.name} wins with {self.current_player.score} points!"
+            )
             if self.highscore is not None:
                 self.highscore.add_score(
                     self.current_player.name, self.current_player.score
@@ -110,7 +114,7 @@ class Game:
         """Run the main game loop (interactive)."""
         # simple header
         print("╔" + "═" * 46 + "╗")
-        print(f"║ 🎲 Two-Dice Pigs".ljust(46)+"║")
+        print(f"║ 🎲 Two-Dice Pigs".ljust(46) + "║")
         print("╚" + "═" * 46 + "╝")
         print(f"👤 Player 1: {self.human_player.name}")
         print(f"🤖 Player 2: {self.computer_player.name}")
@@ -187,7 +191,7 @@ class Game:
 
         self.turn_total += total
         potential_score = self.current_player.score + self.turn_total
-        #tidied uppp
+        # tidied uppp
         print(
             f"📈 Current turn total: {self.turn_total:>{self._NUM_W}}\n"
             f"😛 Potential score:    {potential_score:>{self._NUM_W}}"
