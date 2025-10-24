@@ -1,0 +1,9 @@
+pytest
+pytest-cov
+flake8
+black
+pylint
+radon
+bandit
+cohesion
+pdoc
